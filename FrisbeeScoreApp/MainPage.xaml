@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FrisbeeScoreApp.MainPage"
+             Title="Etusivu">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+
+            <!-- Otsikko -->
+            <Label Text="Frisbee Score App"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Paikallinen frisbeegolf-tuloslaskuri"
+                   FontSize="14"
+                   Opacity="0.8"
+                   HorizontalOptions="Center" />
+
+            <!-- Päätoiminnot -->
+            <Button Text="Radat"
+                    HeightRequest="50"
+                    Clicked="OnCoursesClicked" />
+
+            <Button Text="Uusi kierros"
+                    HeightRequest="50"
+                    Clicked="OnNewRoundClicked" />
+
+            <Button Text="Tulokset"
+                    HeightRequest="50"
+                    Clicked="OnResultsClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

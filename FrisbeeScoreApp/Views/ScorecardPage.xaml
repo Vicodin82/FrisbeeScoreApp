@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FrisbeeScoreApp.Views.ScorecardPage"
+             Title="Tuloslaskuri">
+
+    <Grid Padding="20" RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="12">
+
+        <!-- Radan nimi -->
+        <Label Grid.Row="0"
+               x:Name="CourseNameLabel"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- Yhteenveto -->
+        <Frame Grid.Row="1" Padding="10" CornerRadius="12">
+            <Label x:Name="SummaryLabel"
+                   Text="Yhteensä heitot: 0 | Tulos pariin: 0"
+                   HorizontalOptions="Center" />
+        </Frame>
+
+        <!-- Väylälista -->
+        <CollectionView Grid.Row="2" x:Name="ScoreList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="0,5" CornerRadius="12">
+                        <Grid ColumnDefinitions="Auto,Auto,*,Auto"
+                              ColumnSpacing="10">
+
+                            <Label Grid.Column="0"
+                                   Text="{Binding HoleNumber, StringFormat='Väylä {0}'}"
+                                   VerticalOptions="Center" />
+
+                            <Label Grid.Column="1"
+                                   Text="{Binding Par, StringFormat='Par {0}'}"
+                                   VerticalOptions="Center" />
+
+                            <Label Grid.Column="2" />
+
+                            <Entry Grid.Column="3"
+                                   WidthRequest="80"
+                                   Keyboard="Numeric"
+                                   Text="{Binding Throws}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="3"
+                Text="Laske tulos"
+                HeightRequest="50"
+                Clicked="OnCalculateClicked" />
+
+        <Button Grid.Row="4"
+                Text="Valmis kierros"
+                HeightRequest="50"
+                Clicked="OnFinishClicked" />
+
+    </Grid>
+</ContentPage>

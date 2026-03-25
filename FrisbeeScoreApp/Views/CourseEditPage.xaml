@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FrisbeeScoreApp.Views.CourseEditPage"
+             Title="Lisää rata">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Lisää rata"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Radan nimi" />
+            <Entry x:Name="NameEntry"
+                   Placeholder="Esim. Laajavuori Pro"
+                   HorizontalOptions="Fill"
+                   ClearButtonVisibility="WhileEditing" />
+
+            <Label Text="Väylien määrä" />
+            <Entry x:Name="HoleCountEntry"
+                   Placeholder="9 tai 18"
+                   Keyboard="Numeric"
+                   HorizontalOptions="Fill"
+                   ClearButtonVisibility="WhileEditing" />
+
+            <Button Text="Tallenna rata"
+                    Clicked="OnSaveClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

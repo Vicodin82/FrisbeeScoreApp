@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FrisbeeScoreApp.Views.NewRoundPage"
+             Title="Uusi kierros">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <!-- Otsikko -->
+        <Label Text="Aloita uusi kierros"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- Ohjeteksti -->
+        <Label Text="Valitse rata listasta"
+               HorizontalOptions="Center" />
+
+        <!-- Ratalista -->
+        <Picker x:Name="CoursePicker"
+                Title="Valitse rata"
+                ItemDisplayBinding="{Binding Name}" />
+
+        <!-- Aloitusnappi -->
+        <Button Text="Aloita kierros"
+                Clicked="OnStartRoundClicked" />
+
+    </VerticalStackLayout>
+</ContentPage>

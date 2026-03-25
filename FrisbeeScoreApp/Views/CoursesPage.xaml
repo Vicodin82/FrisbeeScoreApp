@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FrisbeeScoreApp.Views.CoursesPage"
+             Title="Radat">
+
+    <Grid Padding="20" RowDefinitions="Auto,*,Auto" RowSpacing="15">
+
+        <!-- Otsikko -->
+        <Label Grid.Row="0"
+               Text="Radat"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- Lista -->
+        <CollectionView Grid.Row="1" x:Name="CoursesList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12"
+                           Margin="0,6"
+                           CornerRadius="12">
+                        <VerticalStackLayout Spacing="8">
+
+                            <!-- Radan nimi -->
+                            <Label Text="{Binding Name}"
+                                   FontSize="18"
+                                   FontAttributes="Bold" />
+
+                            <!-- Väylien määrä -->
+                            <Label Text="{Binding HoleCount, StringFormat='Väyliä: {0}'}"
+                                   FontSize="14"
+                                   Opacity="0.8" />
+
+                            <!-- Toiminnot -->
+                            <HorizontalStackLayout Spacing="8">
+                                <Button Text="Muokkaa"
+                                        Clicked="OnEditCourseClicked"
+                                        CommandParameter="{Binding .}" />
+
+                                <Button Text="Väylät"
+                                        Clicked="OnEditHolesClicked"
+                                        CommandParameter="{Binding .}" />
+
+                                <Button Text="Poista"
+                                        Clicked="OnDeleteCourseClicked"
+                                        CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Lisää rata -->
+        <Button Grid.Row="2"
+                Text="Lisää rata"
+                HeightRequest="50"
+                Clicked="OnAddCourseClicked" />
+
+    </Grid>
+</ContentPage>
