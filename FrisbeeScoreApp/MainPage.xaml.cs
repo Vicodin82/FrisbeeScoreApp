@@ -33,5 +33,11 @@ namespace FrisbeeScoreApp
             var page = _serviceProvider.GetRequiredService<ResultsPage>();
             await Navigation.PushAsync(page);
         }
+
+        private async void OnHistoryClicked(object sender, EventArgs e)
+        {
+            var page = _serviceProvider.GetRequiredService<HistoryPage>();
+            await Navigation.PushAsync(page);
+        }
     }
 }

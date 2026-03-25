@@ -4,7 +4,7 @@
              x:Class="FrisbeeScoreApp.Views.ResultsPage"
              Title="Tulokset">
 
-    <Grid Padding="20" RowDefinitions="Auto,Auto,*,Auto,*" RowSpacing="12">
+    <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,*,Auto,*" RowSpacing="12">
 
         <!-- Otsikko -->
         <Label Grid.Row="0"
@@ -13,15 +13,28 @@
                FontAttributes="Bold"
                HorizontalOptions="Center" />
 
-        <!-- Radan valinta top 5:lle -->
+        <!-- Radan valinta -->
         <Picker Grid.Row="1"
                 x:Name="CoursePicker"
-                Title="Valitse rata Top 5 -listaan"
+                Title="Valitse rata"
                 ItemDisplayBinding="{Binding Name}"
                 SelectedIndexChanged="OnCourseSelectedChanged" />
 
-        <!-- Top 5 -->
+        <!-- Viimeisin kierros -->
         <Frame Grid.Row="2" Padding="12" CornerRadius="12">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Viimeisin kierros tällä radalla"
+                       FontSize="18"
+                       FontAttributes="Bold" />
+
+                <Label x:Name="LatestRoundLabel"
+                       Text="Valitse rata nähdäksesi viimeisimmän kierroksen."
+                       LineBreakMode="WordWrap" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Top 5 -->
+        <Frame Grid.Row="3" Padding="12" CornerRadius="12">
             <VerticalStackLayout Spacing="10">
                 <Label Text="Top 5 tällä radalla"
                        FontSize="18"
@@ -32,8 +45,6 @@
                         <DataTemplate>
                             <Frame Padding="10" Margin="0,4" CornerRadius="10">
                                 <VerticalStackLayout Spacing="4">
-                                    <Label Text="{Binding CourseName}"
-                                           FontAttributes="Bold" />
                                     <Label Text="{Binding DatePlayed, StringFormat='Päivä: {0:dd.MM.yyyy HH:mm}'}" />
                                     <Label Text="{Binding TotalThrows, StringFormat='Heitot: {0}'}" />
                                     <Label Text="{Binding TotalVsPar, StringFormat='Pariin: {0:+#;-#;0}'}" />
@@ -45,29 +56,16 @@
             </VerticalStackLayout>
         </Frame>
 
-        <!-- Kaikki kierrokset otsikko -->
-        <Label Grid.Row="3"
-               Text="Kaikki kierrokset"
-               FontSize="18"
-               FontAttributes="Bold" />
+        <!-- Tyhjä otsikkoerotin / voidaan käyttää myöhemmin -->
+        <Label Grid.Row="4"
+               Text=""
+               HeightRequest="1" />
 
-        <!-- Historia -->
-        <CollectionView Grid.Row="4" x:Name="ResultsList">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="12" Margin="0,5" CornerRadius="12">
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding CourseName}"
-                                   FontSize="17"
-                                   FontAttributes="Bold" />
-                            <Label Text="{Binding DatePlayed, StringFormat='Päivä: {0:dd.MM.yyyy HH:mm}'}" />
-                            <Label Text="{Binding TotalThrows, StringFormat='Heitot: {0}'}" />
-                            <Label Text="{Binding TotalVsPar, StringFormat='Pariin: {0:+#;-#;0}'}" />
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <!-- Info -->
+        <Frame Grid.Row="5" Padding="12" CornerRadius="12">
+            <Label Text="Tulokset-sivu näyttää valitun radan parhaat kierrokset sekä viimeisimmän kierroksen."
+                   LineBreakMode="WordWrap" />
+        </Frame>
 
     </Grid>
 </ContentPage>

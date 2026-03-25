@@ -30,6 +30,9 @@
             <Button Text="Tulokset"
                     HeightRequest="50"
                     Clicked="OnResultsClicked" />
+            <Button Text="Historia"
+                    HeightRequest="50"
+                    Clicked="OnHistoryClicked" />
 
         </VerticalStackLayout>
     </ScrollView>

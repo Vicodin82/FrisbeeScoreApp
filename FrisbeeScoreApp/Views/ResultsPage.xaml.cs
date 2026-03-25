@@ -16,28 +16,39 @@ public partial class ResultsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await LoadDataAsync();
+        await LoadCoursesAsync();
     }
 
-    // Lataa historia ja ratalista pickerille
-    private async Task LoadDataAsync()
+    // Lataa radat pickerille
+    private async Task LoadCoursesAsync()
     {
         var courses = await _databaseService.GetCoursesAsync();
         CoursePicker.ItemsSource = courses;
 
-        var rounds = await _databaseService.GetAllRoundDisplayItemsAsync();
-        ResultsList.ItemsSource = rounds;
-
         TopResultsList.ItemsSource = null;
+        LatestRoundLabel.Text = "Valitse rata nähdäksesi viimeisimmän kierroksen.";
     }
 
-    // Kun rata vaihtuu pickerissä, haetaan sen Top 5
+    // Kun rata vaihtuu, haetaan top 5 ja viimeisin kierros
     private async void OnCourseSelectedChanged(object sender, EventArgs e)
     {
-        if (CoursePicker.SelectedItem is Course selectedCourse)
+        if (CoursePicker.SelectedItem is not Course selectedCourse)
+            return;
+
+        var topResults = await _databaseService.GetTopRoundsByCourseAsync(selectedCourse.Id, 5);
+        TopResultsList.ItemsSource = topResults;
+
+        var latestRound = await _databaseService.GetLatestRoundByCourseAsync(selectedCourse.Id);
+
+        if (latestRound == null)
         {
-            var topResults = await _databaseService.GetTopRoundsByCourseAsync(selectedCourse.Id, 5);
-            TopResultsList.ItemsSource = topResults;
+            LatestRoundLabel.Text = "Tälle radalle ei ole vielä tallennettu kierroksia.";
+            return;
         }
+
+        LatestRoundLabel.Text =
+            $"Päivä: {latestRound.DatePlayed:dd.MM.yyyy HH:mm}\n" +
+            $"Heitot: {latestRound.TotalThrows}\n" +
+            $"Pariin: {latestRound.TotalVsPar:+#;-#;0}";
     }
 }

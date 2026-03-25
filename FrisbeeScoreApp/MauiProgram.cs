@@ -30,6 +30,7 @@ namespace FrisbeeScoreApp
             builder.Services.AddSingleton<NewRoundPage>();
             builder.Services.AddSingleton<ScorecardPage>();
             builder.Services.AddSingleton<ResultsPage>();
+            builder.Services.AddSingleton<HistoryPage>();
 
 #if DEBUG
             // Debug-lokit kehitysvaiheeseen

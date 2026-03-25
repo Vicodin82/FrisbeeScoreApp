@@ -214,5 +214,95 @@ namespace FrisbeeScoreApp.Services
                 })
                 .ToList();
         }
+
+        //Hakee viimeisimmän kierroksen valitulta radalta
+        public async Task<RoundDisplayItem?> GetLatestRoundByCourseAsync(int courseId)
+        {
+            await InitAsync();
+
+            var course = await _database!.Table<Course>()
+                .FirstOrDefaultAsync(c => c.Id == courseId);
+
+            var latestRound = await _database.Table<Round>()
+                .Where(r => r.CourseId == courseId)
+                .OrderByDescending(r => r.DatePlayed)
+                .FirstOrDefaultAsync();
+
+            if (latestRound == null)
+                return null;
+
+            return new RoundDisplayItem
+            {
+                RoundId = latestRound.Id,
+                CourseName = course?.Name ?? "Tuntematon rata",
+                DatePlayed = latestRound.DatePlayed,
+                TotalThrows = latestRound.TotalThrows,
+                TotalVsPar = latestRound.TotalVsPar
+            };
+        }
+
+        //Hakee historian vuoden ja kuukauden perusteella
+        public async Task<List<RoundDisplayItem>> GetRoundHistoryAsync(int year, int? month = null)
+        {
+            await InitAsync();
+
+            var rounds = await _database!.Table<Round>().ToListAsync();
+            var courses = await _database.Table<Course>().ToListAsync();
+
+            var filteredRounds = rounds
+                .Where(r => r.DatePlayed.Year == year);
+
+            if (month.HasValue)
+            {
+                filteredRounds = filteredRounds.Where(r => r.DatePlayed.Month == month.Value);
+            }
+
+            return filteredRounds
+                .OrderByDescending(r => r.DatePlayed)
+                .Select(round => new RoundDisplayItem
+                {
+                    RoundId = round.Id,
+                    CourseName = courses.FirstOrDefault(c => c.Id == round.CourseId)?.Name ?? "Tuntematon rata",
+                    DatePlayed = round.DatePlayed,
+                    TotalThrows = round.TotalThrows,
+                    TotalVsPar = round.TotalVsPar
+                })
+                .ToList();
+        }
+
+        //Historian yhteenveto
+        public async Task<HistorySummary> GetHistorySummaryAsync(int year, int? month = null)
+        {
+            await InitAsync();
+
+            var rounds = await _database!.Table<Round>().ToListAsync();
+
+            var filteredRounds = rounds
+                .Where(r => r.DatePlayed.Year == year);
+
+            if (month.HasValue)
+            {
+                filteredRounds = filteredRounds.Where(r => r.DatePlayed.Month == month.Value);
+            }
+
+            var result = filteredRounds.ToList();
+
+            if (result.Count == 0)
+            {
+                return new HistorySummary
+                {
+                    RoundCount = 0,
+                    BestVsPar = 0,
+                    AverageVsPar = 0
+                };
+            }
+
+            return new HistorySummary
+            {
+                RoundCount = result.Count,
+                BestVsPar = result.Min(r => r.TotalVsPar),
+                AverageVsPar = result.Average(r => r.TotalVsPar)
+            };
+        }
     }
 }

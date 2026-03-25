@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FrisbeeScoreApp.Views.HistoryPage"
+             Title="Historia">
+
+    <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,Auto,*" RowSpacing="12">
+
+        <!-- Otsikko -->
+        <Label Grid.Row="0"
+               Text="Historia"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center" />
+
+        <!-- Suodattimet -->
+        <HorizontalStackLayout Grid.Row="1" Spacing="10">
+
+            <Picker x:Name="YearPicker"
+                    Title="Vuosi"
+                    WidthRequest="150"
+                    SelectedIndexChanged="OnFilterChanged" />
+
+            <Picker x:Name="MonthPicker"
+                    Title="Kuukausi"
+                    WidthRequest="180"
+                    SelectedIndexChanged="OnFilterChanged" />
+
+        </HorizontalStackLayout>
+
+        <!-- Yhteenveto -->
+        <Frame Grid.Row="2" Padding="12" CornerRadius="12">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Yhteenveto"
+                       FontSize="18"
+                       FontAttributes="Bold" />
+
+                <Label x:Name="SummaryLabel"
+                       Text="Valitse vuosi ja kuukausi." />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Historia otsikko -->
+        <Label Grid.Row="3"
+               Text="Kierrokset"
+               FontSize="18"
+               FontAttributes="Bold" />
+
+        <!-- Lista -->
+        <CollectionView Grid.Row="4" x:Name="HistoryList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="12" Margin="0,5" CornerRadius="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="{Binding CourseName}"
+                                   FontSize="17"
+                                   FontAttributes="Bold" />
+                            <Label Text="{Binding DatePlayed, StringFormat='Päivä: {0:dd.MM.yyyy HH:mm}'}" />
+                            <Label Text="{Binding TotalThrows, StringFormat='Heitot: {0}'}" />
+                            <Label Text="{Binding TotalVsPar, StringFormat='Pariin: {0:+#;-#;0}'}" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
