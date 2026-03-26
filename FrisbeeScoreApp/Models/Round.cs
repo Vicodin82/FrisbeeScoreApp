@@ -7,10 +7,12 @@ namespace FrisbeeScoreApp.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public int CourseId { get; set; }     // Mihin rataan kuuluu
+        public int CourseId { get; set; }       // Mihin rataan kuuluu
         public DateTime DatePlayed { get; set; }
 
-        public int TotalThrows { get; set; }  // Kokonaisheitot
-        public int TotalVsPar { get; set; }   // Suhde pariin
+        public int TotalThrows { get; set; }    // Kokonaisheitot
+        public int TotalVsPar { get; set; }     // Suhde pariin
+
+        public string Weather { get; set; } = string.Empty; // Valinnainen säämerkintä
     }
 }

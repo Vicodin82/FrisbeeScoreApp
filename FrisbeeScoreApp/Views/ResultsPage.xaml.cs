@@ -49,6 +49,7 @@ public partial class ResultsPage : ContentPage
         LatestRoundLabel.Text =
             $"P‰iv‰: {latestRound.DatePlayed:dd.MM.yyyy HH:mm}\n" +
             $"Heitot: {latestRound.TotalThrows}\n" +
-            $"Pariin: {latestRound.TotalVsPar:+#;-#;0}";
+            $"Pariin: {latestRound.TotalVsPar:+#;-#;0}\n" +
+            $"S‰‰: {latestRound.Weather}";
     }
 }

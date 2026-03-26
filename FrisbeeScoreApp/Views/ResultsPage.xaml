@@ -48,6 +48,7 @@
                                     <Label Text="{Binding DatePlayed, StringFormat='Päivä: {0:dd.MM.yyyy HH:mm}'}" />
                                     <Label Text="{Binding TotalThrows, StringFormat='Heitot: {0}'}" />
                                     <Label Text="{Binding TotalVsPar, StringFormat='Pariin: {0:+#;-#;0}'}" />
+                                    <Label Text="{Binding Weather, StringFormat='Sää: {0}'}" />
                                 </VerticalStackLayout>
                             </Frame>
                         </DataTemplate>

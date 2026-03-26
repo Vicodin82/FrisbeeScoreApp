@@ -181,7 +181,8 @@ namespace FrisbeeScoreApp.Services
                     CourseName = courses.FirstOrDefault(c => c.Id == round.CourseId)?.Name ?? "Tuntematon rata",
                     DatePlayed = round.DatePlayed,
                     TotalThrows = round.TotalThrows,
-                    TotalVsPar = round.TotalVsPar
+                    TotalVsPar = round.TotalVsPar,
+                    Weather = round.Weather
                 })
                 .OrderByDescending(item => item.DatePlayed)
                 .ToList();
@@ -210,7 +211,8 @@ namespace FrisbeeScoreApp.Services
                     CourseName = course?.Name ?? "Tuntematon rata",
                     DatePlayed = round.DatePlayed,
                     TotalThrows = round.TotalThrows,
-                    TotalVsPar = round.TotalVsPar
+                    TotalVsPar = round.TotalVsPar,
+                    Weather = round.Weather
                 })
                 .ToList();
         }
@@ -237,7 +239,8 @@ namespace FrisbeeScoreApp.Services
                 CourseName = course?.Name ?? "Tuntematon rata",
                 DatePlayed = latestRound.DatePlayed,
                 TotalThrows = latestRound.TotalThrows,
-                TotalVsPar = latestRound.TotalVsPar
+                TotalVsPar = latestRound.TotalVsPar,
+                Weather = latestRound.Weather
             };
         }
 
@@ -265,7 +268,8 @@ namespace FrisbeeScoreApp.Services
                     CourseName = courses.FirstOrDefault(c => c.Id == round.CourseId)?.Name ?? "Tuntematon rata",
                     DatePlayed = round.DatePlayed,
                     TotalThrows = round.TotalThrows,
-                    TotalVsPar = round.TotalVsPar
+                    TotalVsPar = round.TotalVsPar,
+                    Weather = round.Weather
                 })
                 .ToList();
         }

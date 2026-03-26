@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FrisbeeScoreApp.Models
+﻿namespace FrisbeeScoreApp.Models
 {
     public class RoundDisplayItem
     {
@@ -13,5 +7,6 @@ namespace FrisbeeScoreApp.Models
         public DateTime DatePlayed { get; set; }
         public int TotalThrows { get; set; }
         public int TotalVsPar { get; set; }
+        public string Weather { get; set; } = string.Empty; // Sääsymboli + teksti
     }
 }

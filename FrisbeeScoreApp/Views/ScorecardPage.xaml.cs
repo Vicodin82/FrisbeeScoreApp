@@ -13,6 +13,21 @@ public partial class ScorecardPage : ContentPage
     {
         InitializeComponent();
         _databaseService = databaseService;
+
+        // Valinnainen s‰‰lista
+        WeatherPicker.ItemsSource = new List<string>
+        {
+            "",
+            "Aurinkoinen",
+            "Puolipilvinen",
+            "Pilvinen",
+            "Sade",
+            "Rankka sade",
+            "Tuulinen",
+            "Kuuma",
+            "Kylm‰",
+            "Lumisade"
+        };
     }
 
     public async Task LoadCourseAsync(Course course)
@@ -33,10 +48,9 @@ public partial class ScorecardPage : ContentPage
             Throws = 0
         }).ToList();
 
-        // N‰ytet‰‰n listassa
         ScoreList.ItemsSource = _scoreEntries;
+        WeatherPicker.SelectedIndex = 0; // oletus = ei valintaa
 
-        // P‰ivitet‰‰n yhteenveto
         UpdateSummary();
     }
 
@@ -51,31 +65,27 @@ public partial class ScorecardPage : ContentPage
         if (_course == null)
             return;
 
-        // Lasketaan tulokset
         int totalThrows = _scoreEntries.Sum(s => s.Throws);
         int totalPar = _scoreEntries.Sum(s => s.Par);
         int vsPar = totalThrows - totalPar;
 
-        // Luodaan kierros
         var round = new Round
         {
             CourseId = _course.Id,
             DatePlayed = DateTime.Now,
             TotalThrows = totalThrows,
-            TotalVsPar = vsPar
+            TotalVsPar = vsPar,
+            Weather = WeatherPicker.SelectedItem?.ToString() ?? string.Empty
         };
 
-        // Tallennetaan
         await _databaseService.SaveRoundAsync(round, _scoreEntries);
 
         await DisplayAlert("OK", "Kierros tallennettu!", "OK");
-
         await Navigation.PopAsync();
     }
 
     private void UpdateSummary()
     {
-        // Lasketaan kokonaistulos
         int totalThrows = _scoreEntries.Sum(s => s.Throws);
         int totalPar = _scoreEntries.Sum(s => s.Par);
         int vsPar = totalThrows - totalPar;
