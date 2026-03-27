@@ -1,91 +1,139 @@
 
+
 # 📱 FrisbeeScoreApp
 
-Paikallinen mobiilisovellus frisbeegolfin tulosten kirjaamiseen.
-Sovellus on toteutettu **.NET MAUI:lla** ja käyttää **SQLite-tietokantaa**, joten kaikki data tallennetaan laitteelle ilman verkkoyhteyttä.
+**FrisbeeScoreApp** on mobiilisovellus frisbeegolfin tulosten kirjaamiseen ja seurantaan.
+Sovellus on toteutettu **.NET MAUI -teknologialla** ja toimii täysin paikallisesti ilman verkkoyhteyttä.
 
 ---
 
-# 🎯 Sovelluksen tarkoitus
+# 🎯 Projektin tarkoitus
 
 Sovelluksen tavoitteena on tarjota yksinkertainen ja käytännöllinen työkalu:
 
-* kierrosten tulosten kirjaamiseen
 * ratojen hallintaan
-* tulosten seurantaan
-* oman pelikehityksen tarkasteluun
+* kierrosten tulosten kirjaamiseen
+* tulosten analysointiin
+* oman kehityksen seuraamiseen
+
+Sovellus on suunniteltu erityisesti yksittäiselle käyttäjälle (ei moninpeliä tai pilvipalvelua).
 
 ---
 
 # ⚙️ Teknologiat
 
-* .NET MAUI
-* C#
-* SQLite (SQLiteAsyncConnection)
-* XAML (UI)
+* **.NET MAUI**
+* **C#**
+* **XAML**
+* **SQLite (SQLiteAsyncConnection)**
 
 ---
 
-# 📦 Pääominaisuudet
+# 🧱 Sovelluksen rakenne
+
+## 📁 Models
+
+* `Course` – rata
+* `Hole` – väylä
+* `Round` – kierros
+* `RoundScore` – väyläkohtaiset tulokset
+* `ScoreEntry` – UI-malli kierroksen syöttöön
+* `RoundDisplayItem` – näkymää varten muokattu data
+* `HistorySummary` – historian yhteenveto
+
+## 📁 Services
+
+* `DatabaseService`
+
+  * vastaa tietokannan käsittelystä
+  * sisältää CRUD-toiminnot ja hakulogiikan
+
+## 📁 Views
+
+* `MainPage` – etusivu
+* `CoursesPage` – ratojen hallinta
+* `CourseEditPage` – radan luonti/muokkaus
+* `HoleEditorPage` – väyläkohtainen editori
+* `NewRoundPage` – kierroksen aloitus
+* `ScorecardPage` – tuloslaskuri
+* `ResultsPage` – tulosnäkymä
+* `HistoryPage` – historiatiedot
+
+---
+
+# 🗺️ Pääominaisuudet
 
 ## 🗺️ Ratojen hallinta
 
-Käyttäjä voi:
+* ➕ Luo uusia ratoja
+* ✏️ Muokkaa radan nimeä
+* ❌ Poista rata (varmistusdialogilla)
+* 🔢 Määritä väylien määrä
+* 🎯 Muokkaa väyläkohtaiset par-arvot
 
-* ➕ luoda uusia ratoja
-* ✏️ muokata radan nimeä
-* ❌ poistaa radan (varmistusdialogilla)
-* 🔢 määrittää väylien määrän
-* 🎯 muokata jokaisen väylän par-arvon
+👉 Radan poistaminen poistaa myös:
+
+* kaikki siihen liittyvät kierrokset
+* väylät
+* tulokset
 
 ---
 
-## 🥏 Kierroksen pelaaminen (tuloslaskuri)
+## 🥏 Kierroksen kirjaaminen
 
 Käyttäjä voi:
 
 1. valita radan
-2. syöttää jokaisen väylän heittotuloksen
-3. nähdä:
+2. syöttää jokaisen väylän tuloksen
+3. nähdä reaaliaikaisesti:
 
    * kokonaisheitot
-   * tulos suhteessa pariin
+   * tuloksen suhteessa pariin
 
-Lisäksi:
+### 🌦️ Säämerkintä (valinnainen)
 
-* 🌦️ kierrokselle voi valita **säätilan (valinnainen)**
-* kierros voidaan tallentaa historiaan
+Kierrokselle voi lisätä säätilan, esim:
+
+* Aurinkoinen
+* Puolipilvinen
+* Pilvinen
+* Sade
+* Rankka sade
+* Tuulinen
+* Kuuma
+* Kylmä
+* Lumisade
 
 ---
 
-## 🏆 Tulokset-näkymä
+## 🏆 Tulokset
 
-Tulokset-sivu näyttää valitun radan:
+Tulokset-näkymä näyttää valitun radan:
 
 ### 🔝 Top 5 kierrosta
 
-* järjestetty parhaasta tuloksesta
+* parhaat tulokset järjestettynä
 * huomioi:
 
   * par-tulos
-  * heittojen määrä
+  * heitot
   * ajankohta
 
 ### 🕒 Viimeisin kierros
 
-* viimeisin pelattu kierros kyseisellä radalla
-* näyttää:
+* viimeisin pelattu kierros valitulla radalla
+* sisältää:
 
-  * päivämäärä
+  * päivämäärän
   * heitot
-  * tulos pariin
-  * sää
+  * tuloksen
+  * sään
 
 ---
 
 ## 📊 Historia
 
-Erillinen historia-näkymä käyttäjän kierroksille.
+Erillinen historia-näkymä:
 
 ### 🔍 Suodatus:
 
@@ -108,77 +156,39 @@ Erillinen historia-näkymä käyttäjän kierroksille.
 
 ---
 
-# 🌦️ Säämerkintä
+# 🎨 Käyttöliittymä
 
-Käyttäjä voi lisätä kierrokselle säätilan, esim:
+* mobiiliystävällinen layout
+* korttipohjainen esitystapa
+* selkeä navigointi
+* värikoodatut tulokset:
 
-* Aurinkoinen
-* Puolipilvinen
-* Pilvinen
-* Sade
-* Rankka sade
-* Tuulinen
-* Kuuma
-* Kylmä
-* Lumisade
-
-Sää näkyy:
-
-* tuloksissa
-* historiassa
+  * 🟢 negatiivinen (hyvä tulos)
+  * 🔴 positiivinen (huonompi tulos)
+  * ⚪ par
 
 ---
 
-# 💾 Tietojen tallennus
+# 🔤 Lajittelu
 
-Kaikki tiedot tallennetaan paikallisesti SQLite-tietokantaan:
+* radat näytetään **aakkosjärjestyksessä**
+* lajittelu on **case-insensitive**
+* tukee myös suomen kielen merkkejä (ä, ö, å)
+
+---
+
+# 💾 Tietokanta
+
+Kaikki data tallennetaan paikallisesti SQLiteen.
 
 ## Taulut:
 
-* `Course` – radat
-* `Hole` – väylät
-* `Round` – kierrokset
-* `RoundScore` – väyläkohtaiset tulokset
+* `Course`
+* `Hole`
+* `Round`
+* `RoundScore`
 
----
-
-# 🧠 Sovelluksen rakenne
-
-## 📁 Models
-
-* Course
-* Hole
-* Round
-* RoundScore
-* ScoreEntry (UI-malli)
-* RoundDisplayItem (näyttödata)
-* HistorySummary
-
-## 📁 Services
-
-* DatabaseService
-
-  * vastaa kaikesta tietokannan käsittelystä
-
-## 📁 Views
-
-* MainPage
-* CoursesPage
-* CourseEditPage
-* HoleEditorPage
-* NewRoundPage
-* ScorecardPage
-* ResultsPage
-* HistoryPage
-
----
-
-# 🎨 UI / Käyttökokemus
-
-* selkeä mobiili-layout
-* korttipohjainen listaus
-* erilliset näkymät eri tarkoituksiin
-* ei ylikuormitettu yhdellä sivulla
+👉 Sovellus toimii täysin offline.
 
 ---
 
@@ -186,49 +196,50 @@ Kaikki tiedot tallennetaan paikallisesti SQLite-tietokantaan:
 
 ## 1. Luo rata
 
-* lisää nimi ja väylien määrä
+* anna nimi ja väylien määrä
 * muokkaa väylien par-arvot
 
 ## 2. Pelaa kierros
 
 * valitse rata
-* syötä tulokset väylittäin
+* syötä tulokset
 * valitse halutessa sää
-* tallenna kierros
+* tallenna
 
 ## 3. Tarkastele tuloksia
 
-* Top 5 per rata
+* Top 5
 * viimeisin kierros
 
 ## 4. Tarkastele historiaa
 
 * suodata kuukausittain
-* tarkastele kehitystä
+* seuraa kehitystä
 
 ---
 
 # ⚠️ Huomioita
 
-* Sovellus toimii täysin offline
-* Tietokanta sijaitsee laitteen muistissa
-* Sovellus ei sisällä käyttäjätilejä tai pilvitallennusta
+* ei käyttäjätilejä
+* ei pilvitallennusta
+* kaikki data on laitteen muistissa
+* tietokanta alustetaan automaattisesti
 
 ---
 
 # 🔧 Jatkokehitysideoita
 
-Mahdollisia jatkokehityksiä:
-
-* 📈 väyläkohtainen analyysi
 * 📊 graafinen tilastointi
-* 🏁 kierroksen tarkempi näkymä
-* 🎨 värikoodatut tulokset (birdie / bogey)
-* ☁️ pilvitallennus
+* 🧠 väyläkohtainen analyysi
 * 👥 monen pelaajan tuki
+* ☁️ pilvitallennus
+* 🎯 yksittäisen kierroksen tarkempi näkymä
+* 🎨 lisä UI-viimeistely
 
 ---
 
 # 👨‍💻 Tekijä
 
-Meikäläinen ja toveri TekoÄly.
+Meikäläinen ja Tekoäly
+
+
